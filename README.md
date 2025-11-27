@@ -30,7 +30,7 @@ The Streamlit dashboard updates automatically without manual refresh, showing th
 ```
 streaming-service-simulation-kafka/
 │
-├── docker-compose.yml
+├── compose.yml
 ├── producer.py
 ├── consumer.py
 ├── dashboard.py
