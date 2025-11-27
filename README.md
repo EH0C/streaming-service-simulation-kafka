@@ -1,125 +1,112 @@
 
-```markdown
-# Streaming Service Simulation with Kafka 🎬
 
-![Python](https://img.shields.io/badge/python-3.11-blue)
-![Kafka](https://img.shields.io/badge/kafka-Confluent-orange)
-![Docker](https://img.shields.io/badge/docker-yes-lightblue)
+# 🎬 Streaming Service Simulation with Apache Kafka
 
-A **real-time streaming simulation** of a streaming service, built with **Kafka, Python, and Streamlit**.  
-This project demonstrates how user activity (play, pause, like, stop) can be streamed, consumed, and visualized live.
+Real-time analytics using Kafka Producer, Consumer & Streamlit Dashboard
 
----
+## 📌 Overview
 
-## **Project Overview**
+This project simulates real-time user activity events in a streaming platform (like Netflix or Spotify) and processes them through Apache Kafka.
+Events such as **play**, **pause**, **stop**, or **finish** are continuously produced and then consumed for **real-time monitoring and analytics**.
 
-This dashboard simulates a **real-time analytics pipeline** like those used by Netflix or YouTube:
-
-- Python Producer → Kafka Topic → Python Consumer → CSV → Streamlit Dashboard
-- Real-time metrics and interactive charts
-- Fully containerized using Docker Compose
+The Streamlit dashboard updates automatically without manual refresh, showing the most recent 10 events visually.
 
 ---
 
-## **Architecture**
+## 🛠️ Tech Stack
+
+| Component                   | Purpose                      |
+| --------------------------- | ---------------------------- |
+| **Python**                  | Event producer + consumer    |
+| **Apache Kafka**            | Event streaming backbone     |
+| **Docker / Docker Compose** | Kafka environment            |
+| **Streamlit**               | Real-time UI dashboard       |
+| **JSON event messages**     | Standardized event structure |
+
+---
+
+## 📂 Project Structure
 
 ```
-
-[Python Producer] --> [Kafka Topic: user-activity] --> [Python Consumer] --> [CSV / Streamlit Dashboard]
-
-````
-
----
-
-## **Features**
-
-- Simulates user actions: `play`, `pause`, `like`, `stop`
-- Streams events to **Kafka topic** in real-time
-- Python consumer stores events in a **rolling CSV**
-- Interactive **Streamlit dashboard** shows:
-  - Events over time
-  - Top active users
-  - Action distribution
-  - Summary metrics
-- Filters for users and actions
-- Auto-refreshing dashboard (every 2 seconds)
-- Fully Dockerized (Kafka + Zookeeper)
+streaming-service-simulation-kafka/
+│
+├── docker-compose.yml
+├── producer.py
+├── consumer.py
+├── dashboard.py
+└── README.md
+```
 
 ---
 
-## **Getting Started**
+## 📊 Example Event Message
 
-### 1. Clone the Repo
-```bash
-git clone https://github.com/<your-username>/streaming-service-simulation-kafka.git
-cd streaming-service-simulation-kafka
-````
+```json
+{
+  "user_id": "123",
+  "movie_id": "456",
+  "action": "play",
+  "timestamp": "1700000000"
+}
+```
 
-### 2. Start Kafka & Zookeeper
+---
+
+## 🚀 How to Run
+
+### 1️⃣ Start Kafka with Docker
 
 ```bash
 docker compose up -d
 ```
 
-### 3. Install Python Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Run Producer
+### 2️⃣ Start Producer (generate simulated events)
 
 ```bash
 python producer.py
 ```
 
-### 5. Run Consumer
+### 3️⃣ Run Streamlit Dashboard (auto-refresh)
 
 ```bash
-python consumer.py
+streamlit run dashboard.py
 ```
 
-### 6. Run Streamlit Dashboard
+Dashboard will automatically update every 2 seconds without refresh.
+
+---
+
+## 📺 Dashboard Preview
+
+* Real-time event table
+* Live updates of latest 10 events
+* Visual understanding of streaming service behavior
+
+---
+
+## 🎯 Learning Objectives
+
+✔ Understand Kafka basics (producer, consumer, topics)
+✔ Learn real-time analytics without databases
+✔ Build dynamic visualization dashboards
+✔ Simulate real streaming platforms like Netflix / Spotify
+
+---
+
+## 🔮 Future Enhancements
+
+* Integrate Apache Flink for real-time aggregation
+* Store events in PostgreSQL / ClickHouse / DuckDB
+* Add charts (Top movies, Most active users, Event counts)
+
+---
+
+## 📖 Commands Cheatsheet
 
 ```bash
-streamlit run app.py
+# List topics
+kafka-topics --bootstrap-server localhost:9092 --list
+
+# Consume topic from start
+kafka-console-consumer --bootstrap-server localhost:9092 --topic demo-topic --from-beginning
 ```
-
-* Open your browser at `http://localhost:8501/`
-* Charts and metrics update automatically as new events are generated.
-
----
-
-## **Portfolio Highlights**
-
-* Real-time streaming architecture using **Kafka**
-* Interactive **visualizations with Plotly**
-* **Rolling window** for efficient streaming analytics
-* Mimics **real-world streaming service dashboards**
-
----
-
-## **Optional Enhancements**
-
-* Replace CSV with in-memory database or Redis for production-ready streaming
-* Add alert system for specific events (e.g., spikes or errors)
-* Extend metrics: average session length, most watched movies, etc.
-* Deploy on cloud for live demo
-
----
-
-## **Repo Structure**
-
-```
-streaming-service-simulation-kafka/
-│
-├── docker-compose.yml        # Kafka + Zookeeper
-├── producer.py               # Produces random user activity events
-├── consumer.py               # Consumes events from Kafka and writes CSV
-├── app.py                    # Streamlit dashboard
-├── requirements.txt          # Python dependencies
-├── README.md                 # This file
-└── user_activity.csv         # Rolling CSV (ignored in Git)
-```
-
-
